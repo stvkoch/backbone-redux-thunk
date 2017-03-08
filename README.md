@@ -1,78 +1,31 @@
-#Backbonex
+# How we integrate Backbone with redux using thunk middleware
 
 
-[![Build Status](https://travis-ci.org/stvkoch/backbonex.svg?branch=master)](https://travis-ci.org/stvkoch/backbonex)
+This integration allow us have flow in this direction:
 
+ - Backbone -> Redux
+ - Redux -> Backbone
 
-Backbone -> Redux
-Redux -> Backbone
-
-
-Allow use your Models and Collections listen action and syncronize changes in a redux state tree
 
 
 ## Install
 
 ```
-npm install --save backbonex
+git clone .../backbone-redux-thunk
+yarn
 ```
 
-## Usage
-
-### 1# backbone state tree
-
-Create your state tree of backbone models or Collections
+## Run tests
 
 ```
-const backboneTree = {
-  post,
-  posts
-};
+yarn test:watch
 ```
 
-If you desire you can createInitialState from current Backbone entities using `createInitialState`.
 
+## Important parts
 
-```
-import {createInitialState} from 'backbonex';
-const backboneState = createInitialState(backboneTree);
-```
+see folders:
 
-### 2# Create your store
-
-```
-import backbonex from 'backbonex';
-
-const duxCreateStore = backbonex(createStore, applyMiddleware);
-const store = duxCreateStore(backboneTree, backboneState, [...middlewares]);
-```
-
-### 3# Configure yours Models and Collections
-
-```
-import {emitter} from 'backbonex';
-import {POST_CHANGE_ATTRIBUTES} from './actions/post';
-
-class Post extends Backbone.Model {
-  static initialize() {
-    emitter.on(POST_CHANGE_ATTRIBUTES, (action)=> {
-      this.set(action.payload.attributes);
-    });
-  }
-}
-```
-
-### 4# Create yours actions
-
-```
-import {POST_CHANGE_ATTRIBUTES} from './actions/post';
-
-export function postChangeAttr(attributes) {
-  return {
-    type: POST_CHANGE_ATTRIBUTES,
-    attributes
-  };
-}
-```
-
-# backbone-redux-rxjs
+ - src/redux -- actions with integrations
+ - src/store -- how we create simple store
+ - src/campaign and src/campaigns -- how we use actions to keep intermediate state between backbone and redux
