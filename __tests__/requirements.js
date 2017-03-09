@@ -1,12 +1,15 @@
 import {expect} from 'chai';
 import sinon from 'sinon';
 
-import store from './../src/store';
+import {reducersCampaigns} from './../src/redux/reducer';
+import configureStore from './../src/store';
+
 import * as campaignsActions from './../src/campaigns/redux';
 import * as campaignActions from './../src/campaign/redux';
 
 
 const initialState = {campaigns:null, campaign: null};
+const store = configureStore(reducersCampaigns, initialState);
 
 describe('Requirements', () => {
 

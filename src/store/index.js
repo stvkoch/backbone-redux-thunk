@@ -10,12 +10,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 import {createSyncReducer} from './../redux/synchronize';
 
-import reducers from './../redux/reducer';
 
-export default createStore(
+export default (reducers, initialState) => createStore(
   createSyncReducer(
     combineReducers(reducers)
   ),
+  initialState,
   composeEnhancers(
     applyMiddleware(
       thunk

@@ -5,14 +5,29 @@ export const ignoreAction = {type: SYNC_BACKBONE_IGNORE};
 
 export function synchronizeWithRedux(dispatch, stateName) {
   return (entity) => {
-    dispatch(synchronizeState(stateName, entity.toJSON && entity.toJSON()));
+    dispatch(synchronizeState(
+      stateName,
+      entity.toJSON && entity.toJSON(),
+      SYNC_BACKBONE_STATE
+    ));
   }
 }
 
 
-export function synchronizeState(name, data) {
+export function synchronizeWithAction(dispatch, action) {
+  return (entity) => {
+    dispatch(synchronizeState(
+      null,
+      entity.toJSON && entity.toJSON(),
+      action
+    ));
+  }
+}
+
+
+export function synchronizeState(name, data, type = SYNC_BACKBONE_STATE) {
   return {
-    type: SYNC_BACKBONE_STATE,
+    type,
     payload: {
       name,
       data
